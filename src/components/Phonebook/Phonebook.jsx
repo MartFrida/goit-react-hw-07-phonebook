@@ -1,18 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyledWrapper } from './Phonebook.styled';
 import { FilterUsers } from 'components/FilterUsers/FilterUsers';
 import { ContactList } from 'components/ContactList/ContactList';
 import { ContactForm } from 'components/ContactForm/ContactForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact, deleteContact, setFilter } from '../../redux/contacts/contactsSlice';
+import { addContact, setFilter } from '../../redux/contacts/contactsSlice';
 import { nanoid } from '@reduxjs/toolkit';
+import { deleteContactThunk, fetchContactsThunk } from '../../redux/operations';
+import { selectContacts, selectError, selectFilter, selectLoading } from '../../redux/selectors';
 
 export const Phonebook = () => {
 
-  const filter = useSelector(state => state.contactsData.filter)
-  const contacts = useSelector(state => state.contactsData.contacts)
+  const filter = useSelector(selectFilter)
+  const contacts = useSelector(selectContacts)
+  const loading = useSelector(selectLoading)
+  const error = useSelector(selectError)
+
   const dispatch = useDispatch()
-  // console.log(contacts)
+
+  useEffect(() => {
+    dispatch(fetchContactsThunk())
+  }, [dispatch])
 
   const handleAddUser = ({ name, number }) => {
     const isExist = contacts.some((item) => item.name === name)
@@ -33,7 +41,7 @@ export const Phonebook = () => {
   }
 
   const handleDeleteUser = (id) => {
-    dispatch(deleteContact(id))
+    dispatch(deleteContactThunk(id))
   }
 
   return (
@@ -44,7 +52,8 @@ export const Phonebook = () => {
       <h2>Contacts</h2>
       <FilterUsers filter={filter} handleChangeInput={handleSetFilter} />
       <ContactList filteredContacts={getFilteredContacts()} onDeleteUser={handleDeleteUser} />
-
+      {loading && <h1>Loading...</h1>}
+      {error && <h1>{error}</h1>}
     </StyledWrapper>
   )
 }
