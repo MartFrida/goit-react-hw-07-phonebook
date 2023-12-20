@@ -6,7 +6,7 @@ import { ContactForm } from 'components/ContactForm/ContactForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact, setFilter } from '../../redux/contacts/contactsSlice';
 import { nanoid } from '@reduxjs/toolkit';
-import { deleteContactThunk, fetchContactsThunk } from '../../redux/operations';
+import { addContactThunk, deleteContactThunk, fetchContactsThunk } from '../../redux/operations';
 import { selectContacts, selectError, selectFilter, selectLoading } from '../../redux/selectors';
 
 export const Phonebook = () => {
@@ -29,7 +29,7 @@ export const Phonebook = () => {
       return
     }
     const newContact = { id: nanoid(), name, number }
-    dispatch(addContact(newContact))
+    dispatch(addContactThunk(newContact))
   }
 
   const handleSetFilter = (e) => {

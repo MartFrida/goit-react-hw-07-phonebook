@@ -1,6 +1,6 @@
 // https://65660ca1eb8bb4b70ef2d6ab.mockapi.io/api/v1/contacts
 import axios from 'axios';
-import { deleteContact, fetchingData, isError, isPending } from './contacts/contactsSlice';
+import { addContact, deleteContact, fetchingData, isError, isPending } from './contacts/contactsSlice';
 
 axios.defaults.baseURL = 'https://65660ca1eb8bb4b70ef2d6ab.mockapi.io/api/v1'
 
@@ -20,15 +20,15 @@ export const deleteContactThunk = (id) => async dispatch => {
     const { data } = await axios.delete(`contacts/${id}`)
     dispatch(deleteContact(data.id))
   } catch (error) {
-    console.log(error.message)
+    dispatch(isError(error.message))
   }
 }
 
-export const addContactThunk = (contact) => async dispatch => {
+export const addContactThunk = ({ name, number }) => async dispatch => {
   try {
-    const { data } = await axios.post('contacts', {})
-    console.log(data)
+    const { data } = await axios.post('contacts', { name, number })
+    dispatch(addContact(data))
   } catch (error) {
-    console.log(error.message)
+    dispatch(isError(error.message))
   }
 }
