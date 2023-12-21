@@ -4,7 +4,6 @@ import { ContactList } from 'components/ContactList/ContactList';
 import { ContactForm } from 'components/ContactForm/ContactForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilter } from '../../redux/contacts/contactsSlice';
-import { nanoid } from '@reduxjs/toolkit';
 import { addContactThunk, deleteContactThunk, fetchContactsThunk } from '../../redux/operations';
 import { selectContacts, selectError, selectFilter, selectLoading } from '../../redux/selectors';
 
