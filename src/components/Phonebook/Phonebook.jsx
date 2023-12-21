@@ -5,7 +5,7 @@ import { ContactForm } from 'components/ContactForm/ContactForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilter } from '../../redux/contacts/contactsSlice';
 import { addContactThunk, deleteContactThunk, fetchContactsThunk } from '../../redux/operations';
-import { selectContacts, selectError, selectFilter, selectFilteredData, selectLoading } from '../../redux/selectors';
+import { selectError, selectFilter, selectFilteredData, selectLoading } from '../../redux/selectors';
 
 export const Phonebook = () => {
 

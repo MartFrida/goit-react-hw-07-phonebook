@@ -5,10 +5,8 @@ const rootReducer = combineReducers({
   contactsData: contactsReducer,
 })
 
-
 export const store = configureStore({
   reducer: rootReducer,
-
   devTools: process.env.NODE_ENV !== 'production',
 })
 
