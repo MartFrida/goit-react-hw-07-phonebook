@@ -27,7 +27,7 @@ export const Phonebook = () => {
       alert('ALERT')
       return
     }
-    const newContact = { id: nanoid(), name, number }
+    const newContact = { name, number }
     dispatch(addContactThunk(newContact))
   }
 
@@ -44,10 +44,10 @@ export const Phonebook = () => {
   }
 
   return (
-    <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-      <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Phonebook</h2>
+    <div className="flex min-h-full  flex-col justify-center px-6 py-12 mx-auto min-w-64 max-w-max lg:px-8 ">
+      <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Phonebook</h2>
       <ContactForm onAddContact={handleAddUser} />
-      <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Contacts</h2>
+      <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Contacts</h2>
       <FilterUsers filter={filter} handleChangeInput={handleSetFilter} />
       <ContactList filteredContacts={getFilteredContacts()} onDeleteUser={handleDeleteUser} />
       {loading && <h1>Loading...</h1>}
