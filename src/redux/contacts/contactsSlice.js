@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { fetchContactsThunk } from "../../redux/operations"
+import { addContactThunk, deleteContactThunk, fetchContactsThunk } from "../../redux/operations"
 
 const initialState = {
   contacts: [],
@@ -13,25 +13,6 @@ const contactsSlice = createSlice({
   initialState,
   reducers:
   {
-    fetchingData: (state, { payload }) => {
-      state.contacts = payload
-      state.loading = false
-    },
-    isPending: (state, { payload }) => {
-      state.loading = true
-      state.error = ''
-    },
-    isError: (state, { payload }) => {
-      state.error = payload
-    },
-    addContact:
-      (state, { payload }) => {
-        state.contacts.push(payload)
-      },
-    deleteContact: (state, action) => {
-      state.contacts = state.contacts.filter(item => item.id !== action.payload)
-      state.loading = false
-    },
     setFilter: (state, { payload }) => {
       state.filter = payload
     },
@@ -41,6 +22,12 @@ const contactsSlice = createSlice({
       state.contacts = payload
       state.loading = false
     })
+      .addCase(deleteContactThunk.fulfilled, (state, { payload }) => {
+        state.contacts = state.contacts.filter(item => item.id !== payload.id)
+      })
+      .addCase(addContactThunk.fulfilled, (state, { payload }) => {
+        state.contacts.push(payload)
+      })
       .addCase(fetchContactsThunk.pending, state => {
         state.loading = true
       })

@@ -14,6 +14,17 @@ export const fetchContactsThunk = createAsyncThunk('fetchContacts', async (_, th
   }
 })
 
+export const deleteContactThunk = createAsyncThunk('deleteContact', async (id, thunkAPI) => {
+  try {
+    const { data } = await axios.get(`contacts/${id}`)
+    return data
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message)
+  }
+})
+
+
+
 // export const fetchContactsThunk = () => async dispatch => {
 //   try {
 //     dispatch(isPending())
@@ -24,21 +35,29 @@ export const fetchContactsThunk = createAsyncThunk('fetchContacts', async (_, th
 //   }
 // }
 
-export const deleteContactThunk = (id) => async dispatch => {
-  try {
-    dispatch(isPending())
-    const { data } = await axios.delete(`contacts/${id}`)
-    dispatch(deleteContact(data.id))
-  } catch (error) {
-    dispatch(isError(error.message))
-  }
-}
-
-export const addContactThunk = ({ name, number }) => async dispatch => {
+// export const deleteContactThunk = (id) => async dispatch => {
+//   try {
+//     dispatch(isPending())
+//     const { data } = await axios.delete(`contacts/${id}`)
+//     dispatch(deleteContact(data.id))
+//   } catch (error) {
+//     dispatch(isError(error.message))
+//   }
+// }
+export const addContactThunk = createAsyncThunk('addContact', async ({ name, number }, thunkAPI) => {
   try {
     const { data } = await axios.post('contacts', { name, number })
-    dispatch(addContact(data))
+    return data
   } catch (error) {
-    dispatch(isError(error.message))
+    return thunkAPI.rejectWithValue(error.message)
   }
-}
+})
+
+// export const addContactThunk = ({ name, number }) => async dispatch => {
+//   try {
+//     const { data } = await axios.post('contacts', { name, number })
+//     dispatch(addContact(data))
+//   } catch (error) {
+//     dispatch(isError(error.message))
+//   }
+// }
