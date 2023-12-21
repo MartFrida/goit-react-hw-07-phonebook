@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { StyledWrapper } from './Phonebook.styled';
 import { FilterUsers } from 'components/FilterUsers/FilterUsers';
 import { ContactList } from 'components/ContactList/ContactList';
 import { ContactForm } from 'components/ContactForm/ContactForm';
@@ -45,15 +44,14 @@ export const Phonebook = () => {
   }
 
   return (
-    <StyledWrapper >
-
-      <h2>Phonebook</h2>
+    <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+      <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Phonebook</h2>
       <ContactForm onAddContact={handleAddUser} />
-      <h2>Contacts</h2>
+      <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Contacts</h2>
       <FilterUsers filter={filter} handleChangeInput={handleSetFilter} />
       <ContactList filteredContacts={getFilteredContacts()} onDeleteUser={handleDeleteUser} />
       {loading && <h1>Loading...</h1>}
       {error && <h1>{error}</h1>}
-    </StyledWrapper>
+    </div>
   )
 }
