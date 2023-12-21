@@ -5,12 +5,12 @@ import { ContactForm } from 'components/ContactForm/ContactForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilter } from '../../redux/contacts/contactsSlice';
 import { addContactThunk, deleteContactThunk, fetchContactsThunk } from '../../redux/operations';
-import { selectContacts, selectError, selectFilter, selectLoading } from '../../redux/selectors';
+import { selectContacts, selectError, selectFilter, selectFilteredData, selectLoading } from '../../redux/selectors';
 
 export const Phonebook = () => {
 
   const filter = useSelector(selectFilter)
-  const contacts = useSelector(selectContacts)
+  const contacts = useSelector(selectFilteredData)
   const loading = useSelector(selectLoading)
   const error = useSelector(selectError)
 
@@ -48,7 +48,7 @@ export const Phonebook = () => {
       <ContactForm onAddContact={handleAddUser} />
       <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Contacts</h2>
       <FilterUsers filter={filter} handleChangeInput={handleSetFilter} />
-      <ContactList filteredContacts={getFilteredContacts()} onDeleteUser={handleDeleteUser} />
+      <ContactList onDeleteUser={handleDeleteUser} />
       {loading && <h1>Loading...</h1>}
       {error && <h1>{error}</h1>}
     </div>

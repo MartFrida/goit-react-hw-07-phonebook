@@ -1,7 +1,12 @@
-export const ContactList = ({ filteredContacts, onDeleteUser }) => {
+import { useSelector } from "react-redux"
+import { selectFilteredData } from "../../redux/selectors"
+
+export const ContactList = ({ onDeleteUser }) => {
+  const contacts = useSelector(selectFilteredData)
+
   return (
     <ul>
-      {filteredContacts.map(user =>
+      {contacts.map(user =>
         <li className="flex gap-x-6 rounded-lg p-4 hover:bg-gray-50 justify-between" key={user.id}>
           <div>
             <p className="mt-1 text-gray-600">{user.name}:</p>
