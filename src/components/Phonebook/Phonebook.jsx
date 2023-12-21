@@ -34,10 +34,6 @@ export const Phonebook = () => {
     dispatch(setFilter(e.target.value))
   }
 
-  const getFilteredContacts = () => {
-    return contacts.filter(contact => contact.name.toLowerCase().includes(filter.toLowerCase()))
-  }
-
   const handleDeleteUser = (id) => {
     dispatch(deleteContactThunk(id))
   }
