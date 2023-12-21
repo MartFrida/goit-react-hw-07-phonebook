@@ -1,12 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit"
+import { fetchContactsThunk } from "../../redux/operations"
 
 const initialState = {
-  contacts: [
-    // { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-    // { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-    // { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-    // { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-  ],
+  contacts: [],
   filter: '',
   loading: false,
   error: '',
@@ -39,6 +35,19 @@ const contactsSlice = createSlice({
     setFilter: (state, { payload }) => {
       state.filter = payload
     },
+  },
+  extraReducers: builder => {
+    builder.addCase(fetchContactsThunk.fulfilled, (state, { payload }) => {
+      state.contacts = payload
+      state.loading = false
+    })
+      .addCase(fetchContactsThunk.pending, state => {
+        state.loading = true
+      })
+      .addCase(fetchContactsThunk.rejected, (state, { payload }) => {
+        state.loading = false
+        state.error = payload
+      })
   }
 })
 

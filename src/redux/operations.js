@@ -1,18 +1,28 @@
 // https://65660ca1eb8bb4b70ef2d6ab.mockapi.io/api/v1/contacts
 import axios from 'axios';
 import { addContact, deleteContact, fetchingData, isError, isPending } from './contacts/contactsSlice';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
 axios.defaults.baseURL = 'https://65660ca1eb8bb4b70ef2d6ab.mockapi.io/api/v1'
 
-export const fetchContactsThunk = () => async dispatch => {
+export const fetchContactsThunk = createAsyncThunk('fetchContacts', async (_, thunkAPI) => {
   try {
-    dispatch(isPending())
     const { data } = await axios.get('contacts')
-    dispatch(fetchingData(data))
+    return data
   } catch (error) {
-    dispatch(isError(error.message))
+    return thunkAPI.rejectWithValue(error.message)
   }
-}
+})
+
+// export const fetchContactsThunk = () => async dispatch => {
+//   try {
+//     dispatch(isPending())
+//     const { data } = await axios.get('contacts')
+//     dispatch(fetchingData(data))
+//   } catch (error) {
+//     dispatch(isError(error.message))
+//   }
+// }
 
 export const deleteContactThunk = (id) => async dispatch => {
   try {
